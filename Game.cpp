@@ -264,9 +264,11 @@ void Game::CheckColision(Actor* reference)
 		if (
 			difx < 50 &&
 			dify < 40 &&
-			actor != reference
+			actor != reference &&
+			actor->name != reference->name &&
+			reference->name.find(actor->name) == std::string::npos &&
+			actor->name.find(reference->name) == std::string::npos
 		) {
-			if (reference->name == "enemy" && actor->name == "enemy") { return; }
 			actor->Colided(reference);
 			reference->Colided(actor);
 			return;

@@ -6,7 +6,6 @@ public:
 	Laser(class Game* game, Actor* origin, Vector2 start_pos, int direction=1);
 	virtual ~Laser();
 	void UpdateActor(float deltaTime) override;
-	void ProcessColision();
 	float GetRightSpeed() const { return mRightSpeed; }
 	void Colided(Actor* target) override;
 private:

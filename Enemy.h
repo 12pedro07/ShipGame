@@ -15,4 +15,3 @@ private:
 	int laserRechargeTime; // Tempo para recarregar laser em ms
 	static void LaserRecharge(void* origin); // callback que espera ate recarregar o laser
 };
-
