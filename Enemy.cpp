@@ -7,7 +7,7 @@
 #include <iostream>
 
 Enemy::Enemy(Game* game)
-	:Actor(game, "enemy")
+	:Actor(game, "enemy", true)
 	, mDownSpeed(100.0f)
 	, laserAvailable(true)
 	, laserRechargeTime(5000)
@@ -51,8 +51,6 @@ void Enemy::UpdateActor(float deltaTime)
 	{
 		pos.y = 743.0f;
 	}
-	std::string text = this->laserAvailable ? "y" : "n";
-	std::cout << "Laser Available: " << text << std::endl;
 	if (this->laserAvailable) {
 		this->laserAvailable = false;
 		Game* game = this->GetGame();
@@ -69,7 +67,6 @@ void Enemy::Colided(Actor* target)
 
 void Enemy::LaserRecharge(void* origin)
 {
-	std::cout << "enemy recharged! " << std::endl;
 	Enemy* enemy = static_cast<Enemy*>(origin);
 	enemy->laserAvailable = true;
 }

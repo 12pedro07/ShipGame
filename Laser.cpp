@@ -5,7 +5,7 @@
 #include <iostream>
 
 Laser::Laser(Game* game, Actor* origin, Vector2 start_pos, int direction)
-	:Actor(game, "laser_"+origin->name)
+	:Actor(game, "laser_"+origin->name, true)
 	, origin(origin)
 	, mRightSpeed(200.0f)
 	, direction(direction)

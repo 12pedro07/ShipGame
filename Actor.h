@@ -20,7 +20,7 @@ public:
 		EDead
 	};
 
-	Actor(class Game* game, std::string name="unknown");//construtor e destrutor
+	Actor(class Game* game, std::string name="unknown", bool colision=false);//construtor e destrutor
 	virtual ~Actor();
 
 	// função de atualização, não sobrescreva
@@ -66,4 +66,5 @@ private:
 public:
 	// debug variables
 	std::string name;
+	bool hasColision;
 };

@@ -12,13 +12,14 @@
 #include <algorithm>
 #include <string>
 
-Actor::Actor(Game* game, std::string name)
+Actor::Actor(Game* game, std::string name, bool colision)
 	:mState(EActive)//estado do ator, ativo ou desativado
 	, mPosition(Vector2::Zero)//coordenadas para posicionar o ator
 	, mScale(1.0f)//escala
 	, mRotation(0.0f)//parametros para rotação do ator, se necessário
 	, mGame(game)//aponta para a classe Game
 	, name(name)
+	, hasColision(colision)
 {
 	mGame->AddActor(this);//adiciona esse ator ao jogo
 }

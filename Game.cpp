@@ -256,18 +256,18 @@ void Game::CheckColision(Actor* reference)
 {
 	for (auto actor : mActors)
 	{
-		if (actor == this->mBackground) continue;
 		float dify = actor->GetPosition().y - reference->GetPosition().y;
 		dify = dify < 0 ? dify * -1 : dify;
 		float difx = actor->GetPosition().x - reference->GetPosition().x;
 		difx = difx < 0 ? difx * -1 : difx;
 		if (
-			difx < 50 &&
-			dify < 40 &&
-			actor != reference &&
-			actor->name != reference->name &&
-			reference->name.find(actor->name) == std::string::npos &&
-			actor->name.find(reference->name) == std::string::npos
+			actor->hasColision && // Se o outro ator tem colisao
+			difx < 50 && // Se esta dentro do bounding box em x
+			dify < 40 && // Se esta dentro do bounding box em y
+			actor != reference && // Se nao eh ele mesmo
+			actor->name != reference->name && // Se nao eh laser com laser, nave com nave...
+			reference->name.find(actor->name) == std::string::npos && // Se o nome do actor nao contem o nome do laser
+			actor->name.find(reference->name) == std::string::npos // Ou vice versa. Ex: Laser_Enemy e Enemy nao devem se colidir
 		) {
 			actor->Colided(reference);
 			reference->Colided(actor);

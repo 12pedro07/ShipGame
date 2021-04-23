@@ -12,13 +12,12 @@
 #include "Timer.h"
 #include "Laser.h"
 
-#include <iostream>
 #include <thread>
 #include <chrono>
 
 
 Ship::Ship(Game* game)
-	:Actor(game, "ship")
+	:Actor(game, "ship", true)
 	,mRightSpeed(0.0f)
 	,mDownSpeed(0.0f)
 	,laserAvailable(true)
@@ -108,7 +107,6 @@ void Ship::ProcessKeyboard(const uint8_t* state)
 void Ship::LaserRecharge(void* origin)
 {
 	Ship* ship = static_cast<Ship*>(origin);
-	std::cout << "RECHARGED!" << std::endl;
 	ship->laserAvailable = true;
 }
 
