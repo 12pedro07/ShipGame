@@ -12,6 +12,8 @@ public:
 private:
 	float mDownSpeed;
 	bool laserAvailable; // Booleano que diz se a nave pode ou nao atirar
-	int laserRechargeTime; // Tempo para recarregar laser em ms
 	static void LaserRecharge(void* origin); // callback que espera ate recarregar o laser
+	Vector2 initPos;
+	float bound_up;
+	float bound_down;
 };

@@ -69,7 +69,7 @@ void Ship::Colided(Actor* target)
 	this->lives--;
 	if (this->lives == 0)
 	{
-		delete this;
+		this->SetState(EDead);
 	}
 }
 
@@ -104,7 +104,7 @@ void Ship::ProcessKeyboard(const uint8_t* state)
 		if (this->laserAvailable) {
 			this->laserAvailable = false;
 			Game* game = this->GetGame();
-			game->AddActor(new Laser(game, this, this->GetPosition() + Vector2(50,0)));
+			new Laser(game, this, this->GetPosition() + Vector2(50,0));
 			Timer::timer(this->laserRechargeTime, &(Ship::LaserRecharge), this);
 		}
 	}

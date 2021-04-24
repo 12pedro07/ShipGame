@@ -8,9 +8,8 @@
 
 Enemy::Enemy(Game* game)
 	:Actor(game, "enemy", true)
-	, mDownSpeed(100.0f)
 	, laserAvailable(true)
-	, laserRechargeTime(5000)
+	, mDownSpeed(40.0f)
 {
 	// Create an animated sprite component for the Ship using images of the project
 	AnimSpriteComponent* asc = new AnimSpriteComponent(this);
@@ -26,9 +25,11 @@ Enemy::Enemy(Game* game)
 	asc->SetAnimTextures(anims);
 	int randY = 0 + (rand() % (769));
 	int randX = 700 + (rand() % (1024 - 701));
-	this->SetPosition(Vector2((float)randX, (float)randY));
-
-	game->AddActor(this);
+	this->initPos = Vector2((float)randX, (float)randY);
+	this->SetPosition(this->initPos);
+	// Restrict movements in bounds and select direction
+	this->bound_up = this->initPos.y + 50 > 743 ? 743 : this->initPos.y + 50;
+	this->bound_down = this->initPos.y - 50 < 25 ? 25 : this->initPos.y - 50;
 }
 
 void Enemy::UpdateActor(float deltaTime)
@@ -37,32 +38,22 @@ void Enemy::UpdateActor(float deltaTime)
 	Actor::UpdateActor(deltaTime);
 	// Update position based on speeds and delta time
 	Vector2 pos = GetPosition();
+	mDownSpeed = pos.y > this->bound_up || pos.y < this->bound_down ? mDownSpeed * -1 : mDownSpeed;
 	pos.y += mDownSpeed * deltaTime;
-	// Restrict movements in bounds and select direction
-	float bound_up = this->GetPosition().y - 100;
-	float bound_down = this->GetPosition().y + 100;
-	mDownSpeed = pos.y > bound_up || pos.x < bound_down ? mDownSpeed * -1 : mDownSpeed;
-	// Restrict position to left half of screen
-	if (pos.y < 25.0f)
-	{
-		pos.y = 25.0f;
-	}
-	else if (pos.y > 743.0f)
-	{
-		pos.y = 743.0f;
-	}
+	SetPosition(pos);
+
 	if (this->laserAvailable) {
 		this->laserAvailable = false;
 		Game* game = this->GetGame();
-		game->AddActor(new Laser(game, this, this->GetPosition() - Vector2(50, 0), -1));
-		Timer::timer(this->laserRechargeTime, &(Enemy::LaserRecharge), this);
+		new Laser(game, this, this->GetPosition() - Vector2(50, 0), -1);
+		int rand_time = 1000 + (rand() % (7999));
+		Timer::timer(rand_time, &(Enemy::LaserRecharge), this);
 	}
-	SetPosition(pos);
 }
 
 void Enemy::Colided(Actor* target)
 {
-	delete this;
+	this->SetState(EDead);
 }
 
 void Enemy::LaserRecharge(void* origin)
