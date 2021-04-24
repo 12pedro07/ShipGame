@@ -7,8 +7,9 @@
 Spawner::Spawner(Game* game) :
 	Actor(game, "spawner"),
 	cooldown(5000),
-	nEnemies(1),
-	nEnemiesSimultaneous(3),
+	nEnemies(999),
+	nEnemiesSimultaneous(5),
+	level(1),
 	ready(true)
 {
 	this->Enemies = std::vector<Enemy*>();
@@ -24,12 +25,12 @@ void Spawner::UpdateActor(float deltaTime)
 {
 	for (unsigned int i = 0; i < this->Enemies.size(); i++) {
 		Enemy* enemy = this->Enemies[i];
-		if (enemy == nullptr) {
+		if (enemy == nullptr || enemy->GetState() == State::EDead) {
 			this->Enemies.erase(this->Enemies.begin()+i);
 		}
 	}
 
-	if (this->ready) 
+	if (this->ready)
 	{
 		for (int i = 0; i < this->nEnemiesSimultaneous; i++) {
 			if ((int)this->Enemies.size() < this->nEnemies) {

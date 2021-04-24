@@ -105,7 +105,6 @@ void Game::ProcessInput()
 				SDL_SCANCODE_DOWN,
 				SDL_SCANCODE_PERIOD
 			);
-			this->AddActor(player2);
 		}
 	}
 
@@ -161,6 +160,18 @@ void Game::UpdateGame()
 
 	// Update Spawner
 	mSpawner->UpdateActor(deltaTime);
+
+	//this->font = TTF_OpenFont("ARCADECLASSIC.TTF", 30);
+	//this->textColor = { 255, 0, 255 };
+	//this->textSurface = TTF_RenderText_Solid(this->font, "put your text here", this->textColor);
+	//this->Message = SDL_CreateTextureFromSurface(this->mRenderer, this->textSurface);
+
+	//SDL_Rect Message_rect; //create a rect
+	//Message_rect.x = 100;  //controls the rect's x coordinate 
+	//Message_rect.y = 100; // controls the rect's y coordinte
+	//Message_rect.w = 100; // controls the width of the rect
+	//Message_rect.h = 100; // controls the height of the rect
+	//SDL_RenderCopy(this->mRenderer, this->Message, NULL, &Message_rect);
 }
 
 void Game::GenerateOutput()
@@ -191,6 +202,7 @@ void Game::LoadData()
 		SDL_SCANCODE_S,
 		SDL_SCANCODE_SPACE
 	);
+	mShip->lives = 3;
 
 	player2 = nullptr;
 
@@ -228,6 +240,8 @@ void Game::LoadData()
 	bg->SetScrollSpeed(-200.0f);
 
 	this->mBackground = temp;
+
+	TTF_Init();
 }
 
 void Game::UnloadData()
@@ -245,6 +259,9 @@ void Game::UnloadData()
 		SDL_DestroyTexture(i.second);
 	}
 	mTextures.clear();
+
+	//SDL_FreeSurface(this->textSurface);
+	//SDL_DestroyTexture(this->Message);
 }
 
 // =load the textures

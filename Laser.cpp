@@ -19,13 +19,14 @@ Laser::Laser(Game* game, Actor* origin, Vector2 start_pos, int direction)
 //update the Laser moving always forward
 void Laser::UpdateActor(float deltaTime)
 {
+	if (this->GetState() == State::EDead) return;
 	Actor::UpdateActor(deltaTime);
 	// Update position based on speeds and delta time
 	Vector2 pos = GetPosition();
 	pos.x += mRightSpeed * deltaTime * direction;
 	SetPosition(pos);
 	if (pos.x > 1024 || pos.x < 0) {
-		delete this;
+		this->SetState(EDead);
 		return;
 	}
 	this->GetGame()->CheckColision(this);
@@ -34,7 +35,7 @@ void Laser::UpdateActor(float deltaTime)
 void Laser::Colided(Actor* target)
 {
 	if (target != origin)
-		delete this;
+		this->SetState(EDead);
 }
 
 Laser::~Laser() {

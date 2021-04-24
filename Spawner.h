@@ -15,4 +15,5 @@ private:
 	bool ready;
 	std::vector<Enemy*> Enemies;
 	static void CooldownCallback(void* origin);
+	int level;
 };

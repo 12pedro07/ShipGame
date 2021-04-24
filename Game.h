@@ -8,6 +8,7 @@
 
 #pragma once
 #include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -52,6 +53,12 @@ private:
 	bool mIsRunning;
 	// Track if we're updating actors right now
 	bool mUpdatingActors;
+
+	//// Text related
+	//TTF_Font* font;
+	//SDL_Color textColor;
+	//SDL_Surface* textSurface;
+	//SDL_Texture* Message;
 
 	// Game-specific
 	class Ship* mShip; // Player's ship
