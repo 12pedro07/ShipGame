@@ -22,6 +22,7 @@ Ship::Ship(Game* game)
 	,mDownSpeed(0.0f)
 	,laserAvailable(true)
 	,laserRechargeTime(500)
+	,lives(1)
 {
 	// Create an animated sprite component for the Ship using images of the project
 	AnimSpriteComponent* asc = new AnimSpriteComponent(this);
@@ -65,6 +66,11 @@ void Ship::UpdateActor(float deltaTime)
 
 void Ship::Colided(Actor* target)
 {
+	this->lives--;
+	if (this->lives == 0)
+	{
+		delete this;
+	}
 }
 
 //Get inputs by Keyboard
@@ -75,25 +81,25 @@ void Ship::ProcessKeyboard(const uint8_t* state)
 	mRightSpeed = 0.0f;
 	mDownSpeed = 0.0f;
 	// right/left
-	if (state[SDL_SCANCODE_D])
+	if (state[this->right_key])
 	{
 		mRightSpeed += 250.0f;
 	}
-	if (state[SDL_SCANCODE_A])
+	if (state[this->left_key])
 	{
 		mRightSpeed -= 250.0f;
 	}
 	// up/down
-	if (state[SDL_SCANCODE_S])
+	if (state[this->down_key])
 	{
 		mDownSpeed += 300.0f;
 	}
-	if (state[SDL_SCANCODE_W])
+	if (state[this->up_key])
 	{
 		mDownSpeed -= 300.0f;
 	}
 	// space
-	if (state[SDL_SCANCODE_SPACE])
+	if (state[this->shot_key])
 	{
 		if (this->laserAvailable) {
 			this->laserAvailable = false;
@@ -102,6 +108,15 @@ void Ship::ProcessKeyboard(const uint8_t* state)
 			Timer::timer(this->laserRechargeTime, &(Ship::LaserRecharge), this);
 		}
 	}
+}
+
+void Ship::SetControls(SDL_Scancode left, SDL_Scancode right, SDL_Scancode up, SDL_Scancode down, SDL_Scancode shot)
+{
+	this->left_key = left;
+	this->right_key = right;
+	this->up_key = up;
+	this->down_key = down;
+	this->shot_key = shot;
 }
 
 void Ship::LaserRecharge(void* origin)

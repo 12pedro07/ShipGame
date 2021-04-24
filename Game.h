@@ -55,6 +55,7 @@ private:
 
 	// Game-specific
 	class Ship* mShip; // Player's ship
+	class Ship* player2;
 	class Spawner* mSpawner;
 	class Actor* mBackground;
 };

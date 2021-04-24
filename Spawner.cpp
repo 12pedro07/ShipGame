@@ -7,7 +7,7 @@
 Spawner::Spawner(Game* game) :
 	Actor(game, "spawner"),
 	cooldown(5000),
-	nEnemies(10),
+	nEnemies(1),
 	nEnemiesSimultaneous(3),
 	ready(true)
 {
