@@ -92,9 +92,26 @@ void Game::ProcessInput()
 	{
 		mIsRunning = false;
 	}
+	else if (state[SDL_SCANCODE_N])
+	{
+		if (player2 == nullptr) {
+			player2 = new Ship(this);
+			player2->SetPosition(mShip->GetPosition());
+			player2->SetScale(1.0f);
+			player2->SetControls(
+				SDL_SCANCODE_LEFT,
+				SDL_SCANCODE_RIGHT,
+				SDL_SCANCODE_UP,
+				SDL_SCANCODE_DOWN,
+				SDL_SCANCODE_PERIOD
+			);
+			this->AddActor(player2);
+		}
+	}
 
 	// Process ship input
-	mShip->ProcessKeyboard(state);
+	if (mShip->GetState() == Actor::State::EActive) mShip->ProcessKeyboard(state);
+	if (player2 != nullptr && player2->GetState() == Actor::State::EActive) player2->ProcessKeyboard(state);
 }
 
 void Game::UpdateGame()
@@ -167,6 +184,15 @@ void Game::LoadData()
 	mShip = new Ship(this);
 	mShip->SetPosition(Vector2(100.0f, 384.0f));
 	mShip->SetScale(1.5f);
+	mShip->SetControls(
+		SDL_SCANCODE_A,
+		SDL_SCANCODE_D,
+		SDL_SCANCODE_W,
+		SDL_SCANCODE_S,
+		SDL_SCANCODE_SPACE
+	);
+
+	player2 = nullptr;
 
 	
 
