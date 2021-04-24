@@ -39,10 +39,10 @@ public:
 	void SetScale(float scale) { mScale = scale; }
 	float GetRotation() const { return mRotation; }
 	void SetRotation(float rotation) { mRotation = rotation; }
-
+	//Pega o estado do Actor
 	State GetState() const { return mState; }
 	void SetState(State state) { mState = state; }
-
+	//Pega o objeto Game
 	class Game* GetGame() { return mGame; }
 
 

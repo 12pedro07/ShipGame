@@ -10,7 +10,7 @@
 #include "Math.h"
 
 //implementação do componente de sprite animado
-
+//recebe um Actor e um drawOrder como parâmetros
 AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder)
 	:SpriteComponent(owner, drawOrder)
 	, mCurrFrame(0.0f)//frame corrente na animação

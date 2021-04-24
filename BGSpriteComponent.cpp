@@ -18,7 +18,7 @@ BGSpriteComponent::BGSpriteComponent(class Actor* owner, int drawOrder)
 //this function will update the offset of the background - will move it in the screen
 void BGSpriteComponent::Update(float deltaTime)
 {
-	SpriteComponent::Update(deltaTime);
+	SpriteComponent::Update(deltaTime); // Verificar utilidade
 	for (auto& bg : mBGTextures)
 	{
 		// Update the x offset
