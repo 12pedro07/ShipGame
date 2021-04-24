@@ -8,9 +8,12 @@ class Item : public Actor
 private:
     float mLeftSpeed; // Velocidade à esquerda
     int direction;
+    //Actor* origin;
 
 public:
+    
     Item(class Game* game, Actor* origin, Vector2 start_pos, int direction = 1);
+    
     virtual ~Item();
 
     //Atualiza o Actor

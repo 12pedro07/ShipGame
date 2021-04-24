@@ -2,6 +2,7 @@
 #include "AnimSpriteComponent.h"
 #include "Game.h"
 #include "Laser.h"
+#include "Item.h"
 #include "Timer.h"
 
 #include <iostream>
@@ -28,6 +29,7 @@ Enemy::Enemy(Game* game)
 	int randX = 700 + (rand() % (1024 - 701));
 	this->SetPosition(Vector2((float)randX, (float)randY));
 
+	std::cout << "Enemy instatiated" << std::endl;
 	game->AddActor(this);
 }
 
@@ -62,6 +64,8 @@ void Enemy::UpdateActor(float deltaTime)
 
 void Enemy::Colided(Actor* target)
 {
+	Item* item = new Item(this->GetGame(), this, this->GetPosition(), -1);
+	this->GetGame()->AddActor( item );
 	delete this;
 }
 

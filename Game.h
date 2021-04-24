@@ -58,5 +58,4 @@ private:
 	class Ship* player2;
 	class Spawner* mSpawner;
 	class Actor* mBackground;
-	class Item* mItem;
 };
