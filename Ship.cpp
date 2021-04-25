@@ -66,6 +66,15 @@ void Ship::UpdateActor(float deltaTime)
 
 void Ship::Colided(Actor* target)
 {
+	if (target->name == "item_enemy") 
+	{
+		if (laserRechargeTime > 0) {
+			this->laserRechargeTime -= 100;
+			Timer::timer(10000, &(Ship::RemoveItem), this);
+
+		}
+		return;
+	}
 	this->lives--;
 	if (this->lives == 0)
 	{
@@ -123,5 +132,11 @@ void Ship::LaserRecharge(void* origin)
 {
 	Ship* ship = static_cast<Ship*>(origin);
 	ship->laserAvailable = true;
+}
+
+void Ship::RemoveItem(void* origin)
+{
+	Ship* ship = static_cast<Ship*>(origin);
+	ship->laserRechargeTime += 100;
 }
 

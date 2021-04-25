@@ -54,6 +54,12 @@ void Enemy::UpdateActor(float deltaTime)
 
 void Enemy::Colided(Actor* target)
 {
+	int rand_chance = (rand() % 9);
+	if(rand_chance > 0)
+	{
+		new Item(this->GetGame(), this, this->GetPosition());
+	}
+
 	this->SetState(EDead);
 }
 

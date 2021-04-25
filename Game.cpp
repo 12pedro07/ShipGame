@@ -315,10 +315,17 @@ void Game::CheckColision(Actor* reference)
 			reference->name.find(actor->name) == std::string::npos && // Se o nome do actor nao contem o nome do laser
 			actor->name.find(reference->name) == std::string::npos // Ou vice versa. Ex: Laser_Enemy e Enemy nao devem se colidir
 		) {
+			if((reference->name == "item_enemy" && actor->name != "ship")
+				|| actor->name == "item_enemy" && reference->name != "ship")
+			{
+				return;
+			}
+			
 			actor->Colided(reference);
 			reference->Colided(actor);
 			return;
 		}
+
 	}
 }
 
