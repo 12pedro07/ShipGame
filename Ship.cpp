@@ -68,8 +68,8 @@ void Ship::Colided(Actor* target)
 {
 	if (target->name == "item_enemy") 
 	{
-		if (laserRechargeTime > 0) {
-			this->laserRechargeTime -= 100;
+		if (laserRechargeTime > 100) {
+			this->laserRechargeTime -= 50;
 			Timer::timer(10000, &(Ship::RemoveItem), this);
 
 		}

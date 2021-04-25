@@ -54,9 +54,11 @@ void Enemy::UpdateActor(float deltaTime)
 
 void Enemy::Colided(Actor* target)
 {
-	int rand_chance = (rand() % 9);
-	if(rand_chance > 0)
-	{
+	GetGame()->placar += 1;
+	std::cout << GetGame()->placar << std::endl;
+	int rand_chance = 1 + (rand() % 10);
+
+	if(rand_chance > 6){
 		new Item(this->GetGame(), this, this->GetPosition());
 	}
 

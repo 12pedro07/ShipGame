@@ -13,6 +13,10 @@
 #include <string>
 #include <vector>
 
+#include <iostream>
+#include <sstream>
+
+
 class Game
 {
 public:
@@ -29,13 +33,18 @@ public:
 	SDL_Texture* GetTexture(const std::string& fileName);
 	
 	void CheckColision(Actor* actor);
+
+	int placar;
 private:
 	void ProcessInput();
 	void UpdateGame();
 	void GenerateOutput();
 	void LoadData();
 	void UnloadData();
-	
+	void drawText(SDL_Surface* screen, int x, int y, int w, int h, char* texto);
+	void drawInteger(SDL_Surface* screen, int x, int y, int w, int h, int valor);
+
+
 	// Map of textures loaded
 	std::unordered_map<std::string, SDL_Texture*> mTextures;
 
@@ -46,6 +55,7 @@ private:
 
 	// All the sprite components drawn
 	std::vector<class SpriteComponent*> mSprites;
+	std::vector<class SpriteComponent*> mPlacares;
 
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;

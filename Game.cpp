@@ -19,6 +19,7 @@
 #include <time.h>
 #include <string>
 
+
 Game::Game()
 :mWindow(nullptr)
 ,mRenderer(nullptr)
@@ -185,6 +186,9 @@ void Game::GenerateOutput()
 		sprite->Draw(mRenderer);
 	}
 
+	drawText(SDL_GetWindowSurface(mWindow), 10, 25, 100, 30, "Placar");
+	drawInteger(SDL_GetWindowSurface(mWindow), 130, 23, 25, 35, placar);
+
 	SDL_RenderPresent(mRenderer);
 }
 
@@ -205,8 +209,8 @@ void Game::LoadData()
 	mShip->lives = 3;
 
 	player2 = nullptr;
-
 	
+	placar = 0;
 
 	mSpawner = new Spawner(this);
 
@@ -401,4 +405,62 @@ void Game::RemoveSprite(SpriteComponent* sprite)
 	// (We can't swap because it ruins ordering)
 	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
 	mSprites.erase(iter);
+}
+
+
+void Game::drawText(SDL_Surface* screen, int x, int y, int w, int h, char* texto)
+{
+	SDL_Rect dstrect;
+	dstrect.x = x;
+	dstrect.y = y;
+	dstrect.w = w;
+	dstrect.h = h;
+
+	SDL_Color color = { 255,255,255 };
+
+	TTF_Init();
+
+	TTF_Font* font = TTF_OpenFont("ARCADECLASSIC.ttf", 50);
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, texto, color);
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(mRenderer, textSurface);
+	
+
+	SDL_RenderCopy(mRenderer, textTexture, NULL, &dstrect);
+
+	SDL_FreeSurface(textSurface);
+	SDL_DestroyTexture(textTexture);
+	TTF_CloseFont(font);
+	TTF_Quit();
+}
+
+void Game::drawInteger(SDL_Surface* screen, int x, int y, int w, int h, int valor)
+{
+	SDL_Rect dstrect;
+	dstrect.x = x;
+	dstrect.y = y;
+	dstrect.w = w;
+	dstrect.h = h;
+
+	SDL_Color color = { 255,255,255 };
+
+	char textBuffer[64];
+
+	if (valor < 0) {
+		sprintf_s(textBuffer, "%d", valor * (-1));
+	}
+	else {
+		sprintf_s(textBuffer, "%d", valor);
+	}
+
+	TTF_Init();
+	TTF_Font* font = TTF_OpenFont("ARCADECLASSIC.ttf", 50);
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, textBuffer, color);
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(mRenderer, textSurface);
+
+	SDL_RenderCopy(mRenderer, textTexture, NULL, &dstrect);
+
+	SDL_FreeSurface(textSurface);
+	SDL_DestroyTexture(textTexture);
+	TTF_CloseFont(font);
+	TTF_Quit();
 }
